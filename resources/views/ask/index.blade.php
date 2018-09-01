@@ -16,17 +16,13 @@
         </div>
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                @foreach($newQuestions as $newQuestion)
-                    @foreach($newReplies as $newReply)
-                        @if($newQuestion[0]['id'] == $newReply['question_id'])
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <span><a href="/ask/{{$newQuestion[0]['id']}}" style="color: red">{{$newQuestion[0]['content']}}</a></span>
-                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/ask/{{$newQuestion[0]['id']}}" style="color: red">{{$newReply['content']}}</a></p>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
+                @foreach($newReplies as $newReply)
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <span><a href="/ask/{{$newReply['question']['id']}}" style="color: red">{{$newReply['question']['content']}}</a></span>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/ask/{{$newReply['question']['id']}}" style="color: red">{{$newReply['content']}}</a></p>
+                        </div>
+                    </div>
                 @endforeach
             </div>
         </div>
