@@ -15,13 +15,21 @@ class Questions extends Model
 
     public static function getHotQuestions()
     {
-        $data = self::select()->where('reply_count','>','0')
+        $hotQuestions = self::select()->where('reply_count','>','0')
                     ->orderBy('reply_count','desc')
                     ->limit(5)
                     ->get()
                     ->toArray();
+        $replies = Replies::all()->toArray();
 
-        return $data;
+        foreach ($hotQuestions as $k=>$hotQuestion){
+            foreach ($replies as $reply){
+                if ($hotQuestion['id'] == $reply['question_id']){
+                    $hotQuestions[$k]['reply'][] = $reply;
+                }
+            }
+        }
+        return $hotQuestions;
     }
 
     public static function findHelp()
@@ -31,18 +39,7 @@ class Questions extends Model
                     ->limit(8)
                     ->get()
                     ->toArray();
-
         return $data;
-    }
-
-    public static function newQuestions($ids)
-    {
-        $questions = [];
-        foreach ($ids as $id){
-            $questions[] = self::select()->where('id',$id)->get()->toArray();
-        }
-
-        return $questions;
     }
 
     public static function saveQuestion($data)
@@ -55,7 +52,6 @@ class Questions extends Model
     public static function tagShow($id)
     {
         $questions = self::select()->where('tag_id',$id)->get()->toArray();
-        
 
         return $questions;
     }

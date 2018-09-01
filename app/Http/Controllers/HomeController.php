@@ -84,23 +84,13 @@ class HomeController extends Controller
     {
         // hot wenda
         $data['questions'] = Questions::getHotQuestions();
-        $questionsIds = [];
-        foreach ($data['questions'] as $value){
-            $questionsIds[] = $value['id'];
-        }
-        $data['replies'] = Replies::getHotReplies($questionsIds);
 
         // 找你回答 questions
         $data['findHelps'] = Questions::findHelp();
 
         // 最新 replies
         $data['newReplies'] = Replies::newReplies();
-        $repliesIds = [];
-        foreach ($data['newReplies'] as $newReply){
-            $repliesIds[] = $newReply['question_id'];
-        }
-        $data['newQuestions'] = Questions::newQuestions($repliesIds);
-        dd($data);
+
         return view('ask.index',$data);
     }
 

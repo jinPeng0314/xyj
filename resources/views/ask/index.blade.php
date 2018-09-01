@@ -5,16 +5,12 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 @foreach($questions as $question)
-                    @foreach($replies as $reply)
-                        @if($question['id'] == $reply[0]['question_id'])
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <span><a href="/ask/{{$question['id']}}">{{$question['content']}}</a></span>
-                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/ask/{{$question['id']}}">{{ $reply[0]['content'] }}</a></p>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <span><a href="/ask/{{$question['id']}}">{{$question['content']}}</a></span>
+                            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/ask/{{$question['id']}}">{{ $question['reply'][0]['content'] }}</a></p>
+                        </div>
+                    </div>
                 @endforeach
             </div>
         </div>
