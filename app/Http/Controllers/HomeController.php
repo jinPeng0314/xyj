@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Zhuanji;
 use Illuminate\Http\Request;
-use DB;
 use App\Http\Models\Questions;
 use App\Http\Models\Replies;
 use App\Http\Models\Tag;

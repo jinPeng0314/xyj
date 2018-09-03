@@ -19,4 +19,16 @@ class Zhuanji extends Model
 
         return $zhuanji;
     }
+
+    /**
+     * view_count 增加1
+     * 调用方式 $zhuanji = new Zhuanji();
+                $zhuanji->getCount($id);
+     * @param $id 专辑id
+     */
+    public function getCount($id)
+    {
+        $count = self::where('id',$id)->value('view_count');
+        self::where('id',$id)->update(['view_count'=>$count+1]);
+    }
 }
