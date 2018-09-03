@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\Zhuanji;
 use Illuminate\Http\Request;
 use DB;
 use App\Http\Models\Questions;
@@ -90,12 +91,11 @@ class HomeController extends Controller
         // 最新 replies
         $data['newReplies'] = Replies::newReplies();
 
-        // 最新tag
+        // 最新 tag
         $data['tags'] = Tag::newQuestionTag();
 
-        //精选专辑
-
-
+        //精选 zhuanji
+        $data['count'] = Zhuanji::jxzj();
 
         return view('ask.index',$data);
     }
