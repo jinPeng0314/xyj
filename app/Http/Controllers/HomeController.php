@@ -7,7 +7,6 @@ use DB;
 use App\Http\Models\Questions;
 use App\Http\Models\Replies;
 use App\Http\Models\Tag;
-use App\User;
 use Auth;
 
 class HomeController extends Controller
@@ -90,6 +89,13 @@ class HomeController extends Controller
 
         // 最新 replies
         $data['newReplies'] = Replies::newReplies();
+
+        // 最新tag
+        $data['tags'] = Tag::newQuestionTag();
+
+        //精选专辑
+
+
 
         return view('ask.index',$data);
     }
