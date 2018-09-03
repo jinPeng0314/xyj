@@ -112,8 +112,7 @@ class HomeController extends Controller
         $data['reply_count'] = self::REPLY_COUNT;
         $data['view_count'] = self::VIEW_COUNT;
         $data['create_at'] = date('Y-m-d H:i:s');
-        $data['update_at'] = date('Y-m-d H:i:s');
-
+        $data['updated_at'] = date('Y-m-d H:i:s');
         $result = Questions::saveQuestion($data);
 
         if ($result){

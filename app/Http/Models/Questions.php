@@ -44,9 +44,24 @@ class Questions extends Model
 
     public static function saveQuestion($data)
     {
-        $result = self::insert($data);
-
-        return $result;
+        $questionId = self::insertGetId($data);
+        $tags_ids = $data['tag_id'];
+        $tags_ids = explode(',',$tags_ids);
+        if (count($tags_ids) == 1){
+            $first['tag_id'] = $data['tag_id'];
+            $first['question_id'] = $questionId;
+            $first['create_at'] = date('Y-m-d H:i:s');
+            $first['updated_at'] = date('Y-m-d H:i:s');
+            QuestionToTag::insert($first);
+        }else{
+            foreach ($tags_ids as $tags_id){
+                $double['tag_id'] = $tags_id;
+                $double['question_id'] = $questionId;
+                $double['create_at'] = date('Y-m-d H:i:s');
+                $double['updated_at'] = date('Y-m-d H:i:s');
+                QuestionToTag::insert($double);
+            }
+        }
     }
 
     public static function tagShow($id)
