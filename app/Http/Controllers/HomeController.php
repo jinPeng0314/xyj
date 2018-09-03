@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Models\QuestionToTag;
 use App\Http\Models\Zhuanji;
 use Illuminate\Http\Request;
 use App\Http\Models\Questions;
@@ -122,7 +123,7 @@ class HomeController extends Controller
 
     public function tagShow($id)
     {
-        $result = Questions::tagShow($id);
+        $result = QuestionToTag::tagShow($id);
 
         dd($result);
     }

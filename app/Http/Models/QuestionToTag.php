@@ -12,4 +12,22 @@ use Arcanedev\Support\Database\Model;
 class QuestionToTag extends Model
 {
     protected $table = 'question_to_tag';
+
+    public static function tagShow($id)
+    {
+        $result = self::select()->where('tag_id',$id)->get()->toArray();
+
+        $questionsIds = array_pluck($result,'question_id');
+
+        $questions = Questions::all()->toArray();
+        $data = [];
+        foreach ($questionsIds as $k=>$questionsId){
+            foreach ($questions as $question){
+                if ($questionsId == $question['id']){
+                    $data[] = $question;
+                }
+            }
+        }
+        dd($data);
+    }
 }
