@@ -15,9 +15,8 @@ class Zhuanji extends Model
 
     public static function jxzj()
     {
-        $zhuanji = self::all()->toArray();
-
-        return $zhuanji;
+        $zhuanjis = self::select()->where('pid',0)->get()->toArray();
+        return $zhuanjis;
     }
 
     /**

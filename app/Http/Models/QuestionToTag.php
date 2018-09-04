@@ -28,6 +28,7 @@ class QuestionToTag extends Model
                 }
             }
         }
-        dd($data);
+
+        return $data;
     }
 }

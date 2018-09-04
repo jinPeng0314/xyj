@@ -91,11 +91,14 @@ class HomeController extends Controller
         // 最新 replies
         $data['newReplies'] = Replies::newReplies();
 
+        // 最新 question_reply
+        $data['newQuestion'] = Questions::newQuestions();
+
         // 最新 tag
         $data['tags'] = Tag::newQuestionTag();
 
         //精选 zhuanji
-        $data['count'] = Zhuanji::jxzj();
+        $data['zhuanji'] = Zhuanji::jxzj();
 
         return view('ask.index',$data);
     }

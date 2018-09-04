@@ -42,6 +42,26 @@ class Questions extends Model
         return $data;
     }
 
+    public static function newQuestions()
+    {
+        $newQuestions = self::select()->where('reply_count','>','0')
+            ->orderBy('create_at','desc')
+            ->limit(5)
+            ->get()
+            ->toArray();
+        $replies = Replies::all()->toArray();
+
+        foreach ($newQuestions as $k=>$newQuestion){
+            foreach ($replies as $reply){
+                if ($newQuestion['id'] == $reply['question_id']){
+                    $newQuestions[$k]['reply'][] = $reply;
+                }
+            }
+        }
+
+        return $newQuestions;
+    }
+
     public static function saveQuestion($data)
     {
         $questionId = self::insertGetId($data);
