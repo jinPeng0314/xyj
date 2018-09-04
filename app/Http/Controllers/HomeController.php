@@ -9,6 +9,7 @@ use App\Http\Models\Questions;
 use App\Http\Models\Replies;
 use App\Http\Models\Tag;
 use Auth;
+use App\Http\Requests\QuestionsRequest;
 
 class HomeController extends Controller
 {
@@ -108,7 +109,7 @@ class HomeController extends Controller
         //Todo:: class
     }
 
-    public function store(Request $request)
+    public function store(QuestionsRequest $request)
     {
         $data['content'] = $request->get('content');
         $data['tag_id'] = $request->get('tag_id');
