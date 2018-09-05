@@ -101,30 +101,8 @@ class HomeController extends Controller
         //精选 zhuanji
         $data['zhuanji'] = Zhuanji::jxzj();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $data['userQuestion'] = Questions::personQuestions();
 
-        dd($data['userQuestion']);
 
         return view('ask.index',$data);
     }
