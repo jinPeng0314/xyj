@@ -101,6 +101,31 @@ class HomeController extends Controller
         //精选 zhuanji
         $data['zhuanji'] = Zhuanji::jxzj();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $data['userQuestion'] = Questions::personQuestions();
+
+        dd($data['userQuestion']);
+
         return view('ask.index',$data);
     }
 
@@ -116,8 +141,7 @@ class HomeController extends Controller
         $data['user_id'] = Auth::id;
         $data['reply_count'] = self::REPLY_COUNT;
         $data['view_count'] = self::VIEW_COUNT;
-        $data['create_at'] = date('Y-m-d H:i:s');
-        $data['updated_at'] = date('Y-m-d H:i:s');
+
         $result = Questions::saveQuestion($data);
 
         if ($result){

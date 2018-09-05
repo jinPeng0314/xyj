@@ -15,7 +15,7 @@ class Tag extends Model
 
     public static function newQuestionTag()
     {
-        $questions = Questions::select()->where('reply_count','>',0)->orderBy('create_at','desc')->limit(5)->get()->toArray();
+        $questions = Questions::select()->where('reply_count','>',0)->orderBy('created_at','desc')->limit(5)->get()->toArray();
         $replies = Replies::all()->toArray();
         $tagsIds = [];
         foreach ($questions as $k=>$question){

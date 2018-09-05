@@ -8,6 +8,8 @@
 namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
+use Auth;
 
 class Questions extends Model
 {
@@ -35,7 +37,7 @@ class Questions extends Model
     public static function findHelp()
     {
         $data = self::select()->where('reply_count',0)
-                    ->orderBy('create_at','desc')
+                    ->orderBy('created_at','desc')
                     ->limit(8)
                     ->get()
                     ->toArray();
@@ -45,7 +47,7 @@ class Questions extends Model
     public static function newQuestions()
     {
         $newQuestions = self::select()->where('reply_count','>','0')
-            ->orderBy('create_at','desc')
+            ->orderBy('created_at','desc')
             ->limit(5)
             ->get()
             ->toArray();
@@ -70,15 +72,11 @@ class Questions extends Model
         if (count($tags_ids) == 1){
             $first['tag_id'] = $data['tag_id'];
             $first['question_id'] = $questionId;
-            $first['create_at'] = date('Y-m-d H:i:s');
-            $first['updated_at'] = date('Y-m-d H:i:s');
             QuestionToTag::insert($first);
         }else{
             foreach ($tags_ids as $tags_id){
                 $double['tag_id'] = $tags_id;
                 $double['question_id'] = $questionId;
-                $double['create_at'] = date('Y-m-d H:i:s');
-                $double['updated_at'] = date('Y-m-d H:i:s');
                 QuestionToTag::insert($double);
             }
         }
@@ -89,5 +87,15 @@ class Questions extends Model
         $questions = self::select()->where('tag_id',$id)->get()->toArray();
 
         return $questions;
+    }
+
+    public static function personQuestions()
+    {
+        $userId = Auth::id;
+        $data['questionCount'] = count(self::select()->where('user_id',$userId)->get()->toArray());
+        $data['replyCount'] = count(Replies::select()->where('user_id',$userId)->get()->toArray());
+        $data['cainaCount'] = count(Replies::select()->where('user_id',$userId)->where('caina','=',1)->get()->toArray());
+
+        return $data;
     }
 }

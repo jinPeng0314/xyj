@@ -15,7 +15,7 @@ class Replies extends Model
 
     public static function newReplies()
     {
-        $newReplies = self::select()->orderBy('create_at','desc')
+        $newReplies = self::select()->orderBy('created_at','desc')
                     ->limit(10)
                     ->get()
                     ->toArray();
