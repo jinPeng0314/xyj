@@ -132,8 +132,7 @@ class HomeController extends Controller
     public function tagShow(Request $request,$id)
     {
         $result = QuestionToTag::tagShow($id);
-
-
+        // 手动分页
         $perPage = 2;
         if ($request->has('page')) {
             $current_page = $request->input('page');
@@ -149,7 +148,6 @@ class HomeController extends Controller
             'path' => Paginator::resolveCurrentPath(),  //注释2
             'pageName' => 'page',
         ]);
-
         $result = $paginator->toArray()['data'];
 
         dd($result);
