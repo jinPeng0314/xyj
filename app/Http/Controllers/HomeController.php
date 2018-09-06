@@ -10,6 +10,8 @@ use App\Http\Models\Replies;
 use App\Http\Models\Tag;
 use Auth;
 use App\Http\Requests\QuestionsRequest;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class HomeController extends Controller
 {
@@ -127,11 +129,31 @@ class HomeController extends Controller
         }
     }
 
-    public function tagShow($id)
+    public function tagShow(Request $request,$id)
     {
         $result = QuestionToTag::tagShow($id);
+
+
+        $perPage = 2;
+        if ($request->has('page')) {
+            $current_page = $request->input('page');
+            $current_page = $current_page <= 0 ? 1 :$current_page;
+        } else {
+            $current_page = 1;
+        }
+
+        $item = array_slice($result, ($current_page-1)*$perPage, $perPage); //注释1
+        $total = count($result);
+
+        $paginator =new LengthAwarePaginator($item, $total, $perPage, $current_page, [
+            'path' => Paginator::resolveCurrentPath(),  //注释2
+            'pageName' => 'page',
+        ]);
+
+        $result = $paginator->toArray()['data'];
+
         dd($result);
-        return view('index',compact('result'));
+        return view('index',compact('result','paginator'));  // 页面中的分页调用方式 {{ $paginator->render() }}
     }
 
 }
