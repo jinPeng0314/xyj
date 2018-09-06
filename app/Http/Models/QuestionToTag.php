@@ -21,7 +21,7 @@ class QuestionToTag extends Model
 
         $questions = Questions::all()->toArray();
         $data = [];
-        foreach ($questionsIds as $k=>$questionsId){
+        foreach ($questionsIds as $questionsId){
             foreach ($questions as $question){
                 if ($questionsId == $question['id']){
                     $data[] = $question;
@@ -29,6 +29,23 @@ class QuestionToTag extends Model
             }
         }
 
+        $replies = Replies::all()->toArray();
+        foreach ($data as $k=>$value){
+            foreach($replies as $reply){
+                if ($value['id'] == $reply['question_id']){
+                    $data[$k]['reply'][] = $reply;
+                }
+            }
+        }
+
+        $tags = Tag::all()->toArray();
+        foreach ($data as $k=>$value){
+            foreach ($tags as $tag){
+                if ($value['tag_id'] == $tag['id']){
+                    $data[$k]['tagName'] = $tag['name'];
+                }
+            }
+        }
         return $data;
     }
 }

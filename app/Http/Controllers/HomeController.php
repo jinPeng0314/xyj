@@ -130,7 +130,7 @@ class HomeController extends Controller
     public function tagShow($id)
     {
         $result = QuestionToTag::tagShow($id);
-
+        dd($result);
         return view('index',compact('result'));
     }
 
