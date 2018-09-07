@@ -141,17 +141,21 @@ class HomeController extends Controller
             $current_page = 1;
         }
 
-        $item = array_slice($result, ($current_page-1)*$perPage, $perPage); //注释1
+        $item = array_slice($result, ($current_page-1)*$perPage, $perPage);
         $total = count($result);
 
         $paginator =new LengthAwarePaginator($item, $total, $perPage, $current_page, [
-            'path' => Paginator::resolveCurrentPath(),  //注释2
+            'path' => Paginator::resolveCurrentPath(),
             'pageName' => 'page',
         ]);
         $result = $paginator->toArray()['data'];
 
-        dd($result);
         return view('index',compact('result','paginator'));  // 页面中的分页调用方式 {{ $paginator->render() }}
+    }
+
+    function paginate()
+    {
+
     }
 
 }

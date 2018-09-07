@@ -24,25 +24,39 @@ class QuestionToTag extends Model
         foreach ($questionsIds as $questionsId){
             foreach ($questions as $question){
                 if ($questionsId == $question['id']){
-                    $data[] = $question;
+                    $data['all'][] = $question;
                 }
+            }
+        }
+        foreach ($data['all'] as $k=>$v){
+            if ($v['reply_count'] > 0){
+                $data['hasReply'][] = $v;
+            }
+            if ($v['reply_count'] == 0){
+                $data['noReply'][] = $v;
             }
         }
 
         $replies = Replies::all()->toArray();
-        foreach ($data as $k=>$value){
+        foreach ($data['all'] as $k=>$value){
             foreach($replies as $reply){
                 if ($value['id'] == $reply['question_id']){
-                    $data[$k]['reply'][] = $reply;
+                    $data['all'][$k]['reply'][] = $reply;
                 }
             }
         }
-
+        foreach ($data['hasReply'] as $k=>$v){
+            foreach ($replies as $reply){
+                if ($v['id'] == $reply['question_id']){
+                    $data['hasReply'][$k]['reply'] = $reply;
+                }
+            }
+        }
         $tags = Tag::all()->toArray();
-        foreach ($data as $k=>$value){
+        foreach ($data['all'] as $k=>$value){
             foreach ($tags as $tag){
                 if ($value['tag_id'] == $tag['id']){
-                    $data[$k]['tagName'] = $tag['name'];
+                    $data['all'][$k]['tagName'] = $tag['name'];
                 }
             }
         }
