@@ -105,7 +105,8 @@ class HomeController extends Controller
 
         $data['userQuestion'] = Questions::personQuestions();
 
-
+        $user_id = Auth::id;
+        $data['users'] = Questions::usersQuestion($user_id);
         return view('ask.index',$data);
     }
 

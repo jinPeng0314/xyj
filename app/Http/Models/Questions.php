@@ -98,4 +98,31 @@ class Questions extends Model
 
         return $data;
     }
+
+    public static function usersQuestion($userId)
+    {
+        $questionCount = 0;
+        $questions = Questions::all()->toArray();
+        if (!empty($questions)){
+            foreach ($questions as $question){
+                if ($question['user_id'] == $userId){
+                    $questionCount += 1;
+                }
+            }
+        }
+
+        $replyCount = 0;
+        $cainaCount = 0;
+        $replies = Replies::all()->toArray();
+        foreach ($replies as $reply){
+            if ($reply['user_id'] == $userId){
+                $replyCount += 1;
+            }
+            if ($reply['user_id'] == $userId && $reply){
+
+            }
+        }
+
+
+    }
 }
