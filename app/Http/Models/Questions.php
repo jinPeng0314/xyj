@@ -118,11 +118,15 @@ class Questions extends Model
             if ($reply['user_id'] == $userId){
                 $replyCount += 1;
             }
-            if ($reply['user_id'] == $userId && $reply){
-
+            if ($reply['user_id'] == $userId && $reply['caina'] == 1){
+                $cainaCount += 1;
             }
         }
 
+        $data['questionCount'] = $questionCount;
+        $data['replyCount'] = $replyCount;
+        $data['cainaCount'] = $cainaCount;
 
+        return $data;
     }
 }
